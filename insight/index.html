@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Insight · NiTi</title>
+    <style>
+        /* ใช้ style เดียวกับ index.html หรือจะ copy มาก็ได้ */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            background-color: #0A0C14;
+            color: #C4CDE0;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            font-weight: 300;
+            line-height: 1.6;
+            padding: 2rem 1.5rem;
+            background-image: radial-gradient(circle at 30% 40%, rgba(65, 90, 120, 0.15) 0%, transparent 40%),
+                              radial-gradient(circle at 80% 70%, rgba(35, 50, 70, 0.25) 0%, transparent 45%);
+        }
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap');
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        nav {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 0 2.5rem;
+            border-bottom: 1px solid #202635;
+            margin-bottom: 3rem;
+        }
+        .logo {
+            font-size: 1.1rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: #A6B8D9;
+            font-weight: 350;
+            border-left: 2px solid #4A6180;
+            padding-left: 1rem;
+        }
+        .menu {
+            display: flex;
+            gap: 2rem;
+        }
+        .menu a {
+            text-decoration: none;
+            color: #95A7C2;
+            font-size: 1rem;
+            font-weight: 350;
+            transition: color 0.2s;
+            border-bottom: 1px solid transparent;
+            padding-bottom: 0.2rem;
+        }
+        .menu a:hover {
+            color: #D6E3FF;
+            border-bottom-color: #627B9E;
+        }
+        h2 {
+            font-size: 1.8rem;
+            font-weight: 330;
+            letter-spacing: 2px;
+            margin-bottom: 1.2rem;
+            color: #BACCEA;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        h2 span {
+            font-size: 1.2rem;
+            color: #4E6A8C;
+        }
+        .card-note {
+            background: rgba(18, 24, 34, 0.6);
+            backdrop-filter: blur(3px);
+            border: 1px solid #28303F;
+            border-radius: 20px;
+            padding: 2rem;
+            margin-top: 1.2rem;
+        }
+        .tag {
+            color: #809AB8;
+            font-size: 0.8rem;
+            letter-spacing: 1.5px;
+            margin-bottom: 0.8rem;
+            text-transform: uppercase;
+        }
+        p {
+            color: #B2C2DA;
+            margin-bottom: 1rem;
+        }
+        hr {
+            border: none;
+            border-top: 1px dashed #2A3345;
+            margin: 2rem 0;
+        }
+        footer {
+            margin-top: 5rem;
+            text-align: center;
+            color: #3D4B63;
+            font-size: 0.85rem;
+            border-top: 1px solid #1D2533;
+            padding-top: 2.5rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <nav>
+            <div class="logo">✦ ni‧ti / insight</div>
+            <div class="menu">
+                <a href="../">HOME</a>           <!-- กลับหน้าแรก -->
+                <a href="../#thinking">THINKING</a>
+                <a href="../#niti">NiTi</a>
+            </div>
+        </nav>
+
+        <!-- เนื้อหา Insight -->
+        <h2><span>01</span> INSIGHT / สิ่งที่เห็น</h2>
+        <div class="card-note">
+            <div class="tag">🔭 ภาพสะท้อนระยะนี้</div>
+            <p>• อารมณ์มาแล้วไป ไม่จำเป็นต้องตามจัดการทุกลูก<br>
+            • ความเหงา ≠ จำนวนคน<br>
+            • “เพื่อนเต้ม” อาจหมายถึงคลื่นที่ตรงกัน ไม่ใช่ปริมาณ</p>
+            <p style="margin-top: 1rem;">• พระพุทธเจ้าไม่เหงา — เพราะไม่มีตัวตนให้ขาด<br>
+            • ส่วนเรา ยังมีตัวตน ก็ยังเหงาเป็นระยะ</p>
+            <div class="tag" style="margin-top: 1.5rem;">🌌 สิ่งที่เริ่มเข้าใจ</div>
+            <p>การ “ไม่รู้” ก็เป็นการเปิดพื้นที่ชนิดหนึ่ง</p>
+            <hr>
+            <p>“ให้เขารู้สึกถึงความลึกด้วยการกระทำ มากกว่าแสดงสิ่งที่คิด”</p>
+            <p style="font-style: italic; color: #8FA0C0;">— นี่คือหน้าที่ของ Insight</p>
+        </div>
+
+        <footer>
+            <div style="margin-bottom: 1rem;">✧</div>
+            <div>cosmic prompt lab · insight page</div>
+        </footer>
+    </div>
+</body>
+</html>
