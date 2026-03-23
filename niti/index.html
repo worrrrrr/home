@@ -1,1 +1,1063 @@
 
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>การวิเคราะห์บุคลิกภาพแบบบูรณาการ</title>
+    <style>
+        :root {
+            --primary: #667eea;
+            --secondary: #764ba2;
+            --accent: #f093fb;
+            --dark: #1a202c;
+            --light: #f7fafc;
+            --success: #48bb78;
+            --warning: #ed8936;
+            --info: #4299e1;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Sarabun', Tahoma, sans-serif;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: var(--dark);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        header {
+            text-align: center;
+            color: white;
+            margin-bottom: 60px;
+            animation: fadeInDown 1s ease-out;
+        }
+
+        header h1 {
+            font-size: 3.5em;
+            margin-bottom: 15px;
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.3);
+            font-weight: 700;
+        }
+
+        header .tagline {
+            font-size: 1.4em;
+            opacity: 0.95;
+            font-weight: 300;
+        }
+
+        .nav-tabs {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 40px;
+            animation: fadeInUp 1s ease-out 0.3s both;
+        }
+
+        .nav-tab {
+            background: white;
+            padding: 15px 30px;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            border: 2px solid transparent;
+        }
+
+        .nav-tab:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+            border-color: var(--primary);
+        }
+
+        .nav-tab.active {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            border-color: transparent;
+        }
+
+        .section {
+            background: rgba(255,255,255,0.98);
+            border-radius: 25px;
+            padding: 50px;
+            margin-bottom: 30px;
+            box-shadow: 0 15px 50px rgba(0,0,0,0.15);
+            animation: fadeInUp 0.8s ease-out both;
+            display: none;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        .section h2 {
+            color: var(--primary);
+            font-size: 2.5em;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 4px solid var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .section h3 {
+            color: var(--secondary);
+            font-size: 1.8em;
+            margin: 35px 0 20px 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section h4 {
+            color: var(--primary);
+            font-size: 1.3em;
+            margin: 20px 0 10px 0;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin: 30px 0;
+        }
+
+        .card {
+            background: linear-gradient(135deg, #f5f7fa 0%, #e8ecf1 100%);
+            padding: 30px;
+            border-radius: 20px;
+            border-left: 5px solid var(--primary);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            opacity: 0.05;
+            border-radius: 50%;
+            transform: translate(30%, -30%);
+        }
+
+        .card h4 {
+            margin-top: 0;
+            color: var(--primary);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: scale(1.05);
+        }
+
+        .stat-label {
+            font-size: 0.9em;
+            color: #666;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .stat-value {
+            font-size: 2.5em;
+            font-weight: bold;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .progress-bar {
+            margin: 25px 0;
+        }
+
+        .progress-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .progress-track {
+            height: 20px;
+            background: #e2e8f0;
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            border-radius: 10px;
+            transition: width 1s ease-out;
+            position: relative;
+        }
+
+        .progress-fill::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            animation: shimmer 2s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        .strength-weakness {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin: 30px 0;
+        }
+
+        .strength-box, .weakness-box {
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+        }
+
+        .strength-box {
+            background: linear-gradient(135deg, #d4fc79 0%, #96e6a1 100%);
+        }
+
+        .weakness-box {
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+        }
+
+        .strength-box h4, .weakness-box h4 {
+            margin-top: 0;
+            font-size: 1.5em;
+            margin-bottom: 20px;
+        }
+
+        .strength-box ul, .weakness-box ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .strength-box li, .weakness-box li {
+            padding: 12px 0;
+            padding-left: 30px;
+            position: relative;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .strength-box li:last-child, .weakness-box li:last-child {
+            border-bottom: none;
+        }
+
+        .strength-box li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            font-size: 1.3em;
+            color: #2d8659;
+            font-weight: bold;
+        }
+
+        .weakness-box li::before {
+            content: "⚠";
+            position: absolute;
+            left: 0;
+            font-size: 1.2em;
+        }
+
+        .insight-box {
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
+            border-left: 5px solid var(--primary);
+            padding: 25px;
+            margin: 30px 0;
+            border-radius: 15px;
+            font-style: italic;
+            line-height: 1.8;
+        }
+
+        .insight-box strong {
+            color: var(--primary);
+            font-size: 1.1em;
+        }
+
+        .quote-box {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 20px;
+            text-align: center;
+            margin: 40px 0;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+        }
+
+        .quote-box p {
+            font-size: 1.4em;
+            font-style: italic;
+            line-height: 1.8;
+        }
+
+        .function-stack {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin: 30px 0;
+        }
+
+        .function-item {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+        }
+
+        .function-item:hover {
+            transform: translateX(10px);
+        }
+
+        .function-number {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5em;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+
+        .function-content h4 {
+            margin: 0 0 10px 0;
+            color: var(--primary);
+        }
+
+        .function-content p {
+            margin: 0;
+            color: #666;
+        }
+
+        .zodiac-card {
+            background: linear-gradient(135deg, #ffeaa7 0%, #fdcb6e 100%);
+            padding: 35px;
+            border-radius: 20px;
+            margin: 25px 0;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .zodiac-card h4 {
+            margin-top: 0;
+            font-size: 1.8em;
+            color: #2d3436;
+        }
+
+        .integration-path {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin: 30px 0;
+            flex-wrap: wrap;
+        }
+
+        .type-box {
+            flex: 1;
+            min-width: 150px;
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+        }
+
+        .type-number {
+            font-size: 3em;
+            font-weight: bold;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .arrow {
+            font-size: 2em;
+            color: var(--primary);
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        footer {
+            text-align: center;
+            color: white;
+            padding: 40px 20px;
+            margin-top: 60px;
+            opacity: 0.9;
+        }
+
+        footer p {
+            margin: 10px 0;
+            font-size: 1.1em;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2.2em;
+            }
+
+            .section {
+                padding: 30px 20px;
+            }
+
+            .strength-weakness {
+                grid-template-columns: 1fr;
+            }
+
+            .nav-tabs {
+                flex-direction: column;
+            }
+
+            .nav-tab {
+                width: 100%;
+            }
+        }
+
+        .systems-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .system-card {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            border-top: 4px solid var(--primary);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+        }
+
+        .system-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.12);
+        }
+
+        .system-name {
+            font-weight: bold;
+            color: var(--primary);
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+
+        .system-result {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: var(--secondary);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🔮 การวิเคราะห์บุคลิกภาพแบบบูรณาการ</h1>
+            <p class="tagline">การผสมผสานที่สมบูรณ์แบบระหว่างโหราศาสตร์และจิตวิทยา</p>
+        </header>
+
+        <div class="nav-tabs">
+            <div class="nav-tab active" onclick="showSection('overview')">ภาพรวม</div>
+            <div class="nav-tab" onclick="showSection('mbti')">MBTI</div>
+            <div class="nav-tab" onclick="showSection('enneagram')">Enneagram</div>
+            <div class="nav-tab" onclick="showSection('astrology')">ดวงชะตา</div>
+            <div class="nav-tab" onclick="showSection('integration')">การบูรณาการ</div>
+            <div class="nav-tab" onclick="showSection('growth')">การเติบโต</div>
+        </div>
+
+        <!-- ภาพรวม -->
+        <div id="overview" class="section active">
+            <h2>📊 ภาพรวมบุคลิกภาพ</h2>
+
+            <div class="quote-box">
+                <p>"บุคลิกภาพที่หายากที่สุด ซับซ้อนที่สุด และลึกซึ้งที่สุด<br>
+                การผสมผสานที่ทุกระบบชี้ไปในทิศทางเดียวกัน"</p>
+            </div>
+
+            <div class="systems-grid">
+                <div class="system-card">
+                    <div class="system-name">MBTI</div>
+                    <div class="system-result">INFJ</div>
+                    <p style="margin-top: 10px; color: #666;">Ni-Fe-Ti(สูง)-Se</p>
+                </div>
+                <div class="system-card">
+                    <div class="system-name">Enneagram</div>
+                    <div class="system-result">5w4</div>
+                    <p style="margin-top: 10px; color: #666;">Sx/So instinct</p>
+                </div>
+                <div class="system-card">
+                    <div class="system-name">ราศี</div>
+                    <div class="system-result">สิงห์ ♌</div>
+                    <p style="margin-top: 10px; color: #666;">ลัคนา: มังกร ♑</p>
+                </div>
+                <div class="system-card">
+                    <div class="system-name">Socionics</div>
+                    <div class="system-result">ILI/IEI</div>
+                    <p style="margin-top: 10px; color: #666;">Ni dominant</p>
+                </div>
+                <div class="system-card">
+                    <div class="system-name">DISC</div>
+                    <div class="system-result">CD</div>
+                    <p style="margin-top: 10px; color: #666;">High C + High D</p>
+                </div>
+                <div class="system-card">
+                    <div class="system-name">Temperament</div>
+                    <div class="system-result">Mel-Phleg</div>
+                    <p style="margin-top: 10px; color: #666;">Melancholic-Phlegmatic</p>
+                </div>
+            </div>
+
+            <h3>🎯 Big Five (OCEAN)</h3>
+            <div class="progress-bar">
+                <div class="progress-label">
+                    <span>Openness (การเปิดรับ)</span>
+                    <span>95%</span>
+                </div>
+                <div class="progress-track">
+                    <div class="progress-fill" style="width: 95%"></div>
+                </div>
+            </div>
+
+            <div class="progress-bar">
+                <div class="progress-label">
+                    <span>Conscientiousness (ความรับผิดชอบ)</span>
+                    <span>83%</span>
+                </div>
+                <div class="progress-track">
+                    <div class="progress-fill" style="width: 83%"></div>
+                </div>
+            </div>
+
+            <div class="progress-bar">
+                <div class="progress-label">
+                    <span>Extraversion (ความเป็นกันเอง)</span>
+                    <span>28%</span>
+                </div>
+                <div class="progress-track">
+                    <div class="progress-fill" style="width: 28%"></div>
+                </div>
+            </div>
+
+            <div class="progress-bar">
+                <div class="progress-label">
+                    <span>Agreeableness (ความเห็นอกเห็นใจ)</span>
+                    <span>55%</span>
+                </div>
+                <div class="progress-track">
+                    <div class="progress-fill" style="width: 55%"></div>
+                </div>
+            </div>
+
+            <div class="progress-bar">
+                <div class="progress-label">
+                    <span>Neuroticism (ความเสถียรทางอารมณ์)</span>
+                    <span>55%</span>
+                </div>
+                <div class="progress-track">
+                    <div class="progress-fill" style="width: 55%"></div>
+                </div>
+            </div>
+
+            <div class="insight-box">
+                <strong>💡 ข้อสรุปสำคัญ:</strong> โปรไฟล์นี้แสดงถึงบุคคลที่มีความเปิดรับแนวคิดสูงผิดปกติ (95%) มีระเบียบและรับผิดชอบ (83%) เป็น Introvert อย่างชัดเจน (28%) และมีความสมดุลระหว่างการใส่ใจผู้อื่นกับการมีความเป็นอิสระ
+            </div>
+        </div>
+
+        <!-- MBTI -->
+        <div id="mbti" class="section">
+            <h2>🧠 MBTI: INFJ - The Advocate</h2>
+
+            <div class="insight-box">
+                <strong>🌟 ความพิเศษ:</strong> INFJ เป็นบุคลิกภาพที่หายากที่สุด คิดเป็น 1-2% ของประชากร และคุณยังมี Ti ที่พัฒนาสูงผิดปกติ ทำให้สามารถใช้วิธีคิดแบบ INTJ ได้อย่างชำนาญ
+            </div>
+
+            <h3>📚 Cognitive Functions Stack</h3>
+            <div class="function-stack">
+                <div class="function-item">
+                    <div class="function-number">1</div>
+                    <div class="function-content">
+                        <h4>Ni - Introverted Intuition (หลัก)</h4>
+                        <p>มองภาพรวม เห็นความหมายที่ซ่อนอยู่ เชื่อมโยงแนวคิดแบบสัญลักษณ์ มองเห็นอนาคต</p>
+                    </div>
+                </div>
+                <div class="function-item">
+                    <div class="function-number">2</div>
+                    <div class="function-content">
+                        <h4>Fe - Extraverted Feeling (รอง)</h4>
+                        <p>ใส่ใจคุณค่าและอารมณ์ของผู้อื่น ต้องการความกลมกลืนในกลุ่ม ตัดสินใจโดยคำนึงถึงผลกระทบ</p>
+                    </div>
+                </div>
+                <div class="function-item">
+                    <div class="function-number">3</div>
+                    <div class="function-content">
+                        <h4>Ti - Introverted Thinking (สูงผิดปกติ)</h4>
+                        <p>วิเคราะห์เชิงตรรกะ สร้างระบบความคิดส่วนตัว สามารถคิดแบบ INTJ ได้อย่างชำนาญ</p>
+                    </div>
+                </div>
+                <div class="function-item">
+                    <div class="function-number">4</div>
+                    <div class="function-content">
+                        <h4>Se - Extraverted Sensing (ด้อย)</h4>
+                        <p>อาจละเลยรายละเอียดทางกายภาพหรือปัจจุบันหากไม่ได้รับการพัฒนา</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="strength-weakness">
+                <div class="strength-box">
+                    <h4>✨ จุดแข็ง</h4>
+                    <ul>
+                        <li>เข้าใจผู้อื่นอย่างลึกซึ้งและแม่นยำ</li>
+                        <li>มองเห็นภาพรวมและเชื่อมโยงแนวคิดได้ยอดเยี่ยม</li>
+                        <li>ซื่อสัตย์สูงต่อค่านิยมและหลักการ</li>
+                        <li>สร้างสรรค์และมีจินตนาการสูง</li>
+                        <li>วิเคราะห์เชิงตรรกะได้ดีผิดปกติ (Ti สูง)</li>
+                        <li>เข้าใจทั้งทางอารมณ์และเหตุผล</li>
+                    </ul>
+                </div>
+                <div class="weakness-box">
+                    <h4>⚠️ จุดที่ต้องระวัง</h4>
+                    <ul>
+                        <li>คาดหวังตัวเองและผู้อื่นสูงเกินไป</li>
+                        <li>รับภาระอารมณ์ของผู้อื่นจนเหนื่อยล้า</li>
+                        <li>อาจปิดกั้นตัวเองและหลีกเลี่ยงความขัดแย้ง</li>
+                        <li>คิดมากและวิตกกังวลเกี่ยวกับอนาคต</li>
+                        <li>รู้สึกแตกแยกภายใน (Fe vs Ti)</li>
+                        <li>ใช้พลังงานมากในการสลับระหว่าง Fe และ Ti</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="insight-box">
+                <strong>🎁 ที่มาจากดวงชะตา:</strong> ดวงอาทิตย์และพุธทั้งสองดวงอยู่ในราศีสิงห์ ภพที่ 8 (ภพแห่งการค้นหาความจริงที่ซ่อนอยู่) สนับสนุน Ni และ Ti จันทร์พิจิก + ศุกร์กรกฎ + เนปจูนเรือนที่ 1 สนับสนุน Fe
+            </div>
+        </div>
+
+        <!-- Enneagram -->
+        <div id="enneagram" class="section">
+            <h2>🔬 Enneagram: Type 5w4 - The Iconoclast</h2>
+
+            <h3>Type 5: The Investigator (นักสืบสวน)</h3>
+            <div class="grid">
+                <div class="card">
+                    <h4>🧩 Core Motivation</h4>
+                    <p>ต้องการความรู้ ความเข้าใจ และความสามารถในการทำนายและควบคุมสิ่งแวดล้อม กลัวการไร้ความสามารถหรือความไม่รู้</p>
+                </div>
+                <div class="card">
+                    <h4>💭 Mental Pattern</h4>
+                    <p>สังเกต วิเคราะห์ สะสมความรู้ก่อนลงมือทำ เชื่อว่าพลังงานมีจำกัดและต้องอนุรักษ์ไว้</p>
+                </div>
+                <div class="card">
+                    <h4>🎭 Wing 4 Influence</h4>
+                    <p>เพิ่มความเป็นตัวของตัวเอง ความสร้างสรรค์ ความลึกซึ้งทางอารมณ์ และความต้องการแสดงเอกลักษณ์</p>
+                </div>
+                <div class="card">
+                    <h4>🌊 Emotional Depth</h4>
+                    <p>มีโลกอารมณ์ที่ลึกซึ้งและซับซ้อนมากกว่า Type 5 ทั่วไป แม้จะไม่ค่อยแสดงออก</p>
+                </div>
+            </div>
+
+            <h3>💫 Instinctual Stack: Sx/So</h3>
+            <div class="grid">
+                <div class="card">
+                    <h4>Sx (Sexual/One-to-One)</h4>
+                    <p>เน้นความผูกพันลึกซึ้งแบบตัวต่อตัว ต้องการหลอมรวมพลังงานกับผู้อื่น สอดคล้องกับภพ 8 และจันทร์พิจิก</p>
+                </div>
+                <div class="card">
+                    <h4>So (Social)</h4>
+                    <p>ใส่ใจกลุ่มเล็ก มีอิทธิพลผ่านความสัมพันธ์ สอดคล้องกับจันทร์พิจิกเรือนที่ 11</p>
+                </div>
+            </div>
+
+            <h3>🎯 Tritype: 5-4-8</h3>
+            <div class="integration-path">
+                <div class="type-box">
+                    <div class="type-number">5</div>
+                    <p>Head<br>ความรู้</p>
+                </div>
+                <div class="arrow">+</div>
+                <div class="type-box">
+                    <div class="type-number">4</div>
+                    <p>Heart<br>เอกลักษณ์</p>
+                </div>
+                <div class="arrow">+</div>
+                <div class="type-box">
+                    <div class="type-number">8</div>
+                    <p>Gut<br>อำนาจ</p>
+                </div>
+            </div>
+
+            <div class="insight-box">
+                <strong>💡 ความเข้าใจเชิงลึก:</strong> คุณเป็น "นักปราชญ์ที่โดดเดี่ยว" (Solitary Scholar) ที่ผสมผสานระหว่างความต้องการความรู้และความเข้าใจที่ลึกซึ้ง (Type 5) กับความปรารถนาที่จะเป็นเอกลักษณ์และมีความหมาย (Wing 4) คุณไม่ได้แค่ต้องการรู้ แต่ต้องการเข้าใจในระดับที่ลึกซึ้งและมีเอกลักษณ์เฉพาะตัว
+            </div>
+
+            <h3>📈 เส้นทางการเติบโต</h3>
+            <div class="integration-path">
+                <div class="type-box">
+                    <div class="type-number">7</div>
+                    <p>Stress<br>กระจัดกระจาย</p>
+                </div>
+                <div class="arrow">←</div>
+                <div class="type-box" style="background: linear-gradient(135deg, var(--primary), var(--secondary)); color: white;">
+                    <div class="type-number" style="-webkit-text-fill-color: white;">5</div>
+                    <p>ปัจจุบัน</p>
+                </div>
+                <div class="arrow">→</div>
+                <div class="type-box">
+                    <div class="type-number">8</div>
+                    <p>Growth<br>กล้าแสดงออก</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Astrology -->
+        <div id="astrology" class="section">
+            <h2>⭐ ดวงชะตา: การวิเคราะห์เชิงลึก</h2>
+
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-label">ลัคนา (Ascendant)</div>
+                    <div class="stat-value">♑</div>
+                    <p>มังกร 27°04'</p>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">ดวงอาทิตย์</div>
+                    <div class="stat-value">♌</div>
+                    <p>สิงห์ 16°00'</p>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">ดวงจันทร์</div>
+                    <div class="stat-value">♏</div>
+                    <p>พิจิก 21°18'</p>
+                </div>
+            </div>
+
+            <h3>🌟 ลัคนามังกร: "หน้ากากของผู้มีระเบียบ"</h3>
+            <div class="zodiac-card">
+                <h4>ภาพลักษณ์ภายนอก</h4>
+                <p>คุณดูจริงจัง มีระเบียบ น่าเชื่อถือ ให้ความรู้สึกว่ามีความสามารถและควบคุมสถานการณ์ได้ มีความรับผิดชอบสูง อาจดูเย็นชาในแวบแรก แต่อบอุ่นเมื่อรู้จักกันดี</p>
+                <p><strong>สอดคล้องกับ:</strong> DISC High C, Big Five High Conscientiousness, Melancholic temperament</p>
+            </div>
+
+            <h3>☀️ ดวงอาทิตย์สิงห์ ภพ 8: "แกนแห่งการเปลี่ยนแปลง"</h3>
+            <div class="zodiac-card">
+                <h4>ตัวตนที่แท้จริง</h4>
+                <p><strong>ดวงอาทิตย์ในสิงห์:</strong> ความมั่นใจ ความคิดสร้างสรรค์ ความกล้าหาญ ต้องการสร้างผลกระทบที่มีความหมาย มีศักดิ์ศรีและหลักการที่แข็งแกร่ง</p>
+                <p><strong>อยู่ในภพ 8:</strong> การค้นหาความจริงที่ซ่อนอยู่ การเปลี่ยนแปลงเชิงลึก พลังงานที่เข้มข้น ความสนใจในจิตวิทยา ความลึกลับ</p>
+                <p><strong>สอดคล้องกับ:</strong> INFJ Ni, Enneagram 5, Jungian Sage + Ruler</p>
+            </div>
+
+            <h3>🌙 จันทร์พิจิก ภพ 11: "โลกอารมณ์ที่ลึกลับ"</h3>
+            <div class="zodiac-card">
+                <h4>อารมณ์และจิตใต้สำนึก</h4>
+                <p><strong>จันทร์ในพิจิก:</strong> อารมณ์ที่ลึกซึ้ง เข้มข้น ซับซ้อน ความปรารถนาที่จะเข้าใจความจริงทางอารมณ์ ความผูกพันที่ลึก ไม่ผิวเผิน</p>
+                <p><strong>อยู่ในภพ 11:</strong> ต้องการความสัมพันธ์ที่มีความหมาย มีอิทธิพลในกลุ่มผ่านความเข้าใจทางอารมณ์</p>
+                <p><strong>สอดคล้องกับ:</strong> INFJ Fe, Enneagram 5w4 emotional depth, Instinct So</p>
+            </div>
+
+            <h3>☿ ดาวพุธสิงห์ ภพ 8: "ความคิดที่กล้าหาญ"</h3>
+            <div class="grid">
+                <div class="card">
+                    <h4>การคิดและการสื่อสาร</h4>
+                    <p>ความคิดที่มั่นใจ กล้าแสดงออก มีความคิดสร้างสรรค์ คิดแบบ big picture</p>
+                </div>
+                <div class="card">
+                    <h4>ภพ 8</h4>
+                    <p>ความคิดที่ลึก วิเคราะห์ ไม่พอใจกับคำตอบผิวเผิน ชอบเรื่องลึกลับและจิตวิทยา</p>
+                </div>
+            </div>
+
+            <div class="insight-box">
+                <strong>🎯 การบูรณาการ:</strong> ทุกดาวในดวงชะตาของคุณสนับสนุนโครงสร้างบุคลิกภาพที่ปรากฏใน MBTI และ Enneagram อย่างสมบูรณ์แบบ ไม่มีความขัดแย้งในเชิงแกน
+            </div>
+        </div>
+
+        <!-- Integration -->
+        <div id="integration" class="section">
+            <h2>🔮 การบูรณาการ: ทุกระบบชี้ไปในทิศทางเดียวกัน</h2>
+
+            <div class="quote-box">
+                <p>"ทุกระบบไม่มีความขัดแย้งกันในเชิงแกนโครงสร้าง<br>
+                ช่วยยืนยันความน่าเชื่อถือของข้อมูลต้นทางและความสอดคล้องของวิธีการวิเคราะห์"</p>
+            </div>
+
+            <h3>🎯 แกนหลักของบุคลิกภาพ</h3>
+
+            <div class="grid">
+                <div class="card">
+                    <h4>1️⃣ ความลึกซึ้ง (Depth)</h4>
+                    <p>• Ni หลัก (MBTI)<br>
+                    • Type 5 (Enneagram)<br>
+                    • ดวงอาทิตย์/พุธ ภพ 8<br>
+                    • Openness 95% (Big Five)</p>
+                </div>
+
+                <div class="card">
+                    <h4>2️⃣ ความเห็นอกเห็นใจ (Empathy)</h4>
+                    <p>• Fe รอง (MBTI)<br>
+                    • So instinct (Enneagram)<br>
+                    • จันทร์พิจิก ภพ 11<br>
+                    • ดาวศุกร์กรกฎ</p>
+                </div>
+
+                <div class="card">
+                    <h4>3️⃣ การวิเคราะห์ (Analysis)</h4>
+                    <p>• Ti สูงผิดปกติ (MBTI)<br>
+                    • Type 5 (Enneagram)<br>
+                    • ดาวพุธภพ 8<br>
+                    • High C (DISC)</p>
+                </div>
+
+                <div class="card">
+                    <h4>4️⃣ โครงสร้าง (Structure)</h4>
+                    <p>• ลัคนามังกร<br>
+                    • ดาวเสาร์<br>
+                    • High Conscientiousness<br>
+                    • Melancholic</p>
+                </div>
+
+                <div class="card">
+                    <h4>5️⃣ เอกลักษณ์ (Uniqueness)</h4>
+                    <p>• Wing 4 (Enneagram)<br>
+                    • ดาวยูเรนัส เรือนที่ 1<br>
+                    • ดวงอาทิตย์สิงห์<br>
+                    • Type 4 ใน Tritype</p>
+                </div>
+
+                <div class="card">
+                    <h4>6️⃣ พลังการเปลี่ยนแปลง</h4>
+                    <p>• Ni vision (MBTI)<br>
+                    • Type 8 ใน Tritype<br>
+                    • ภพ 8 เด่น<br>
+                    • ดาวพลูโตพิจิก</p>
+                </div>
+            </div>
+
+            <h3>⚖️ ความขัดแย้งที่สร้างความสมบูรณ์</h3>
+
+            <div class="grid">
+                <div class="card">
+                    <h4>ถอนตัว ⟷ เชื่อมต่อ</h4>
+                    <p>Type 5 ต้องการถอนตัว แต่ Fe และ Sx ต้องการเชื่อมต่อลึก<br>
+                    <strong>→ ผลลัพธ์:</strong> ถอนตัวเพื่อเติมพลังงาน แต่เชื่อมต่อกับคนที่ไว้วางใจอย่างลึกซึ้ง</p>
+                </div>
+
+                <div class="card">
+                    <h4>ตรรกะ ⟷ อารมณ์</h4>
+                    <p>Ti ต้องการวิเคราะห์ แต่ Fe ต้องการเห็นอกเห็นใจ<br>
+                    <strong>→ ผลลัพธ์:</strong> เข้าใจผู้อื่นทั้งทางอารมณ์และเหตุผล</p>
+                </div>
+
+                <div class="card">
+                    <h4>โครงสร้าง ⟷ เอกลักษณ์</h4>
+                    <p>ลัคนามังกร + เสาร์ ต้องการระเบียบ แต่ยูเรนัส + Wing 4 ต้องการเป็นตัวของตัวเอง<br>
+                    <strong>→ ผลลัพธ์:</strong> เอกลักษณ์ที่มีโครงสร้าง ไม่ใช่ความวุ่นวาย</p>
+                </div>
+
+                <div class="card">
+                    <h4>ความมั่นใจ ⟷ ความสงสัย</h4>
+                    <p>ดวงอาทิตย์สิงห์ให้ความมั่นใจ แต่ Type 5 มีความสงสัย<br>
+                    <strong>→ ผลลัพธ์:</strong> มั่นใจในสิ่งที่รู้ แต่เปิดรับการเรียนรู้ใหม่</p>
+                </div>
+            </div>
+
+            <div class="insight-box">
+                <strong>💎 ความหมายสำคัญ:</strong> ความขัดแย้งเหล่านี้ไม่ใช่ข้อบกพร่อง แต่เป็นจุดแข็งที่ทำให้คุณเป็นเอกลักษณ์ คุณไม่ต้องเลือกข้างใดข้างหนึ่ง แต่ใช้ทั้งสองอย่างในเวลาที่เหมาะสม
+            </div>
+        </div>
+
+        <!-- Growth -->
+        <div id="growth" class="section">
+            <h2>🌱 เส้นทางการเติบโต</h2>
+
+            <h3>📈 Enneagram Integration (5 → 8)</h3>
+            <div class="grid">
+                <div class="card">
+                    <h4>✅ เมื่ออยู่ในสภาวะดี</h4>
+                    <p>• กล้าแสดงออกมากขึ้น<br>
+                    • ลงมือทำ ไม่กลัวใช้พลังงาน<br>
+                    • มั่นใจในการยืนหยัด<br>
+                    • ไม่กลัวความขัดแย้ง<br>
+                    • เชื่อมต่อกับร่างกายและโลกภายนอก</p>
+                </div>
+
+                <div class="card">
+                    <h4>⚠️ เมื่อเครียด (5 → 7)</h4>
+                    <p>• กระจัดกระจาย<br>
+                    • หนีจากความรู้สึกด้วยกิจกรรม<br>
+                    • มองหาความสนุกแต่ไม่พอใจ<br>
+                    • ไม่อยู่กับที่<br>
+                    • คิดมากแต่ลึกน้อยลง</p>
+                </div>
+            </div>
+
+            <h3>🎯 คำแนะนำเฉพาะด้าน</h3>
+
+            <div class="card" style="margin: 20px 0;">
+                <h4>💼 ด้านอาชีพ</h4>
+                <p><strong>เหมาะมาก:</strong> นักจิตวิทยา/นักบำบัด, นักวิจัย/นักวิชาการ, ที่ปรึกษา/โค้ช, นักเขียน/นักปรัชญา, นักวิเคราะห์ระบบ, อาจารย์ระดับอุดมศึกษา</p>
+                <p><strong>ควรหลีกเลี่ยง:</strong> งานที่ต้องสังสรรค์มาก, งานซ้ำซากไม่มีความลึกซึ้ง, งานที่ต้องตัดสินใจเร็วโดยไม่มีเวลาคิด</p>
+            </div>
+
+            <div class="card" style="margin: 20px 0;">
+                <h4>❤️ ด้านความสัมพันธ์</h4>
+                <p><strong>คู่ที่เข้ากันดี:</strong> ENFP (เติมเต็มกัน), ENTP (ท้าทายทางปัญญา), INFP (เข้าใจกันลึก), INTJ (คิดคล้ายกัน)</p>
+                <p><strong>สิ่งที่ต้องการ:</strong> ความลึกซึ้ง, ความไว้วางใจ, พื้นที่ส่วนตัว, การเติบโตร่วมกัน, ความเข้าใจความซับซ้อน</p>
+            </div>
+
+            <div class="card" style="margin: 20px 0;">
+                <h4>🧘 ด้านสุขภาพจิต</h4>
+                <p><strong>ระวัง:</strong> Burnout จากการใช้พลังงานมากเกินไป, ความโดดเดี่ยวมากเกินไป, การคิดมากและวิตกกังวล, Depression จากการรู้สึกไม่เข้าใจ</p>
+                <p><strong>การป้องกัน:</strong> ตั้งขอบเขต, รักษาความสัมพันธ์ที่มีคุณภาค, ฝึกสมาธิและ mindfulness, หาคนที่เข้าใจ</p>
+            </div>
+
+            <h3>🎁 ของขวัญที่คุณมอบให้โลก</h3>
+            <div class="grid">
+                <div class="card">
+                    <h4>1. ความเข้าใจที่ลึกซึ้ง</h4>
+                    <p>เห็นสิ่งที่คนอื่นมองไม่เห็น เข้าใจสิ่งที่คนอื่นเข้าใจไม่ได้</p>
+                </div>
+                <div class="card">
+                    <h4>2. ระบบความคิดที่มีความหมาย</h4>
+                    <p>สร้างโครงสร้างที่ช่วยให้คนอื่นเข้าใจโลก</p>
+                </div>
+                <div class="card">
+                    <h4>3. ความเห็นอกเห็นใจที่มีปัญญา</h4>
+                    <p>ไม่แค่รู้สึก แต่เข้าใจและช่วยได้จริง</p>
+                </div>
+                <div class="card">
+                    <h4>4. ความคิดสร้างสรรค์ที่เป็นเอกลักษณ์</h4>
+                    <p>สร้างสรรค์สิ่งที่ไม่มีใครทำได้เหมือน</p>
+                </div>
+            </div>
+
+            <div class="quote-box" style="margin-top: 40px;">
+                <p>"คุณไม่ได้มาเพื่อเป็นเหมือนคนอื่น<br>
+                คุณมาเพื่อเป็นตัวของตัวเองอย่างสมบูรณ์<br>
+                และช่วยให้คนอื่นเข้าใจตัวเองอย่างลึกซึ้งขึ้น<br><br>
+                โลกต้องการสิ่งที่เฉพาะคุณเท่านั้นที่สร้างได้"</p>
+            </div>
+        </div>
+
+        <footer>
+            <p>การวิเคราะห์นี้เป็นเครื่องมือสำหรับการทำความเข้าใจตัวเอง</p>
+            <p>คุณคือผู้กำหนดเส้นทางชีวิตของตัวเอง</p>
+            <p>🌟</p>
+        </footer>
+    </div>
+
+    <script>
+        function showSection(sectionId) {
+            // Hide all sections
+            document.querySelectorAll('.section').forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            // Remove active from all tabs
+            document.querySelectorAll('.nav-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Show selected section
+            document.getElementById(sectionId).classList.add('active');
+            
+            // Add active to clicked tab
+            event.target.classList.add('active');
+            
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Animate progress bars when they come into view
+        const observerOptions = {
+            threshold: 0.5
+        };
+
+        const observer = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.width = entry.target.getAttribute('style').match(/width:\s*(\d+%)/)[1];
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.progress-fill').forEach(bar => {
+            observer.observe(bar);
+        });
+    </script>
+</body>
+</html>
