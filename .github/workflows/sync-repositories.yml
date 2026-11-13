@@ -1,0 +1,50 @@
+name: Sync repository index
+
+on:
+  schedule:
+    # 08:00 Asia/Bangkok (01:00 UTC)
+    - cron: "0 1 * * *"
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - "scripts/sync_repositories.py"
+      - ".github/workflows/sync-repositories.yml"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: sync-repository-index
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out home
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+
+      - name: Update public repository list
+        env:
+          GITHUB_OWNER: worrrrrr
+        run: python scripts/sync_repositories.py
+
+      - name: Commit README if changed
+        run: |
+          if git diff --quiet -- README.md; then
+            echo "Repository index is already up to date."
+            exit 0
+          fi
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add README.md
+          git commit -m "chore: sync public repository index"
+          git push
