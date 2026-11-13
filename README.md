@@ -11,7 +11,7 @@
 <!-- REPOSITORIES:START -->
 | Repository | รายละเอียด | ภาษา | อัปเดตล่าสุด |
 |---|---|---|---|
-| [home](https://github.com/worrrrrr/home) | บ้านกลางสำหรับรวมโปรเจกต์และงานบน GitHub | Python | 2026-11-13 |
+| [home](https://github.com/worrrrrr/home) | home  | Python | 2026-11-13 |
 <!-- REPOSITORIES:END -->
 
 ## งานที่กำลังทำ
