@@ -11,6 +11,7 @@
 <!-- REPOSITORIES:START -->
 | Repository | รายละเอียด | ภาษา | อัปเดตล่าสุด |
 |---|---|---|---|
+| [skills](https://github.com/worrrrrr/skills) | — | Python | 2026-11-14 |
 | [home](https://github.com/worrrrrr/home) | home  | Python | 2026-11-13 |
 <!-- REPOSITORIES:END -->
 
