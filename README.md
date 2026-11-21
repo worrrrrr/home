@@ -11,6 +11,7 @@
 <!-- REPOSITORIES:START -->
 | Repository | รายละเอียด | ภาษา | อัปเดตล่าสุด |
 |---|---|---|---|
+| [outworld](https://github.com/worrrrrr/outworld) | — | Svelte | 2026-11-20 |
 | [worakrit](https://github.com/worrrrrr/worakrit) | — | Python | 2026-11-17 |
 | [skills](https://github.com/worrrrrr/skills) | — | Python | 2026-11-14 |
 | [home](https://github.com/worrrrrr/home) | home  | Python | 2026-11-13 |
